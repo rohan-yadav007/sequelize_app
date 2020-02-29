@@ -3,10 +3,7 @@ const mysql = require('mysql');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
 const {Sequelize,DataTypes} = require('sequelize');
-const routes = require('./routes')
-const GetEmployee = require('./controllers/employee')
 const employeeRoute = require('./routes/employee');
-const companyRoute = require('./routes/company');
 
 const app = express();
 app.use(logger('dev'));
@@ -32,7 +29,7 @@ sequelize.authenticate()
 
 sequelize.sync();
 
-app.use('/api/get',employeeRoute)
+app.use('/api/employee',employeeRoute)
 
 
 module.exports = app;

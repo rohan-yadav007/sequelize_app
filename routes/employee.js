@@ -1,9 +1,12 @@
 const app = require('../app')
-const router = require('express').Router();
+const Router = require('express').Router();
 const employee  = require('../controllers/employee')
 
-router.get('/',(req,res)=> employee.createGet(req,res));
+module.exports = Router.get('/get',(req,res)=> employee.getEmployee(req,res));
 
-router.post('/', (req,res)=>employee.createPost(req,res));
+module.exports = Router.post('/post', (req,res)=>employee.createEmployee(req,res));
 
-module.exports = router;
+module.exports = Router.put('/update', (req,res)=>employee.updateEmployee(req,res));
+
+module.exports = Router.delete('/delete', (req,res)=>employee.deleteEmployee(req,res));
+
