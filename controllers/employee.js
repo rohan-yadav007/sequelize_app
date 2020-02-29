@@ -6,21 +6,15 @@ const db = require('../models').db
 const employee = db.employee;
 
 
-const createPost = (req,res)=>{
-    const {employee_name,employee_designation,salary} = req.body;
-    db.create({
-        employee_name:employee_name,
-        employee_designation:employee_designation,
-        salary:salary
-    }).then(()=>res.json({
-        success:'New record added in the table'
-    })).catch(err=>res.json(err.message))
+const createEmployee = (req,res)=>{
+    db.employee.create(req.body)
+    .then((result)=>res.json({result}))
+    .catch(err=>res.json(err.message))
 }
 
  const getEmployee =(req,res) =>  {
      try {
-        db.employee.findAll({
-            where:{employee_name:"rohan"}}).then(result=>res.json(result));
+        db.employee.findAll({attributes:[ ['id','SN'],['employee_name','name'], 'salary' ]}).then(result=>res.json(result));
      } catch (error) {
         console.log(error)
      }
@@ -28,7 +22,7 @@ const createPost = (req,res)=>{
 
 const updateEmployee =(req,res) =>  {
     try {
-        db.employee.findAll({
+        db.employee.update({
            where:{employee_name:"rohan"}}).then(result=>res.json(result));
     } catch (error) {
        console.log(error)
@@ -37,14 +31,14 @@ const updateEmployee =(req,res) =>  {
 
 const deleteEmployee =(req,res) =>  {
     try {
-        db.employee.findAll({
-           where:{employee_name:"rohan"}}).then(result=>res.json(result));
+        db.employee.destroy({
+           where:{id:req.body}}).then(result=>res.json(result));
     } catch (error) {
        console.log(error)
     }
 }
 
 module.exports.getEmployee =  getEmployee;
-module.exports.createPost =  createPost;
+module.exports.createEmployee =  createEmployee;
 module.exports.updateEmployee =  updateEmployee;
 module.exports.deleteEmployee =  deleteEmployee ;
